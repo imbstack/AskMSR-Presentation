@@ -1,0 +1,47 @@
+!!!
+%html
+  %head
+    %title AskMSR -- Speaker Notes
+    :css
+      h2 {
+        text-align: center;
+      }
+  %body
+    %h2 AskMSR -- Speaker Notes
+    :textile
+      h3. Methodology: Part 1
+      * First, the query is passed through a process that is the main focus of this presentation
+      * Next the results are applied to the corpus provided for TREC
+
+      h3. Methodology: Part 2
+
+      Each of these stages makes up a part of the AskMSR system, and will be gone into in depth in later slides.
+
+      # Query Reformulation
+      ** The system reformulates query strings into multiple secondary queries to pass on to the search engine
+      ** The secondary queries are chosen to be substrings of potential answers
+      # Search Engine
+      ** The search engine used is actually just Google!
+      # Mine N-grams
+      ** Page summaries from Google results are collected 
+      ** Extract unigram, bigram, and trigrams for later processing
+      # Filter N-grams
+      ** the n-grams are filtered and reweighted according to how well each candidate matches the expected answer-type
+      # Tile N-grams
+      ** Finally n-grams are merged into longer and longer answers until none can be combined further
+      # Return K best answers
+      ** All answers returned with confidence values 
+
+      <hr>
+      h3. Implementation:Redundancy
+      * Redundancy of data allows them to find an answer, even if no clear result is found
+      * An example from another paper from these authors is shown here.  They present a query "How many times did Bjorn Borg win Wimbledon?", and show these example results.  
+      * Because 5 shows up 3 times as often as 37, we can assume that he won it 5 times with a decent degree of certainty.
+      * I'm not sure how much I buy this argument, and I'll revisit it later in my critique. 
+
+      <hr>
+      h3. Critique 
+      * The redundancy argument with Bjorn Borg and the Wimbledon seems week to me.  
+      * Suppose that he won it only once, in 1974 (this was actually his first of 5 wins).  
+      * Now each article that mentions him and the Wimbledon will most definitely make mention of 1974, and perhaps state that he only won it once.
+      * Under the rules for redundancy mentioned before, AskMSR would reply that Bjorn had won 1974 times! Quite a feat, considering the event has only take place since 1877.

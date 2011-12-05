@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>AskMSR -- Speaker Notes</title>
+    <style type='text/css'>
+      /*<![CDATA[*/
+        h2 {
+          text-align: center;
+        }
+      /*]]>*/
+    </style>
+  </head>
+  <body>
+    <h2>AskMSR -- Speaker Notes</h2>
+    <h3>Methodology: Part 1</h3>
+    <ul>
+    	<li>First, the query is passed through a process that is the main focus of this presentation</li>
+    	<li>Next the results are applied to the corpus provided for <span class="caps">TREC</span></li>
+    </ul>
+    <h3>Methodology: Part 2</h3>
+    <p>Each of these stages makes up a part of the AskMSR system, and will be gone into in depth in later slides.</p>
+    <ol>
+    	<li>Query Reformulation
+    	<ul>
+    		<li>The system reformulates query strings into multiple secondary queries to pass on to the search engine</li>
+    		<li>The secondary queries are chosen to be substrings of potential answers</li>
+    	</ul></li>
+    	<li>Search Engine
+    	<ul>
+    		<li>The search engine used is actually just Google!</li>
+    	</ul></li>
+    	<li>Mine N-grams
+    	<ul>
+    		<li>Page summaries from Google results are collected</li>
+    		<li>Extract unigram, bigram, and trigrams for later processing</li>
+    	</ul></li>
+    	<li>Filter N-grams
+    	<ul>
+    		<li>the n-grams are filtered and reweighted according to how well each candidate matches the expected answer-type</li>
+    	</ul></li>
+    	<li>Tile N-grams
+    	<ul>
+    		<li>Finally n-grams are merged into longer and longer answers until none can be combined further</li>
+    	</ul></li>
+    	<li>Return K best answers
+    	<ul>
+    		<li>All answers returned with confidence values</li>
+    	</ul></li>
+    </ol>
+    <hr>
+    <h3>Implementation:Redundancy</h3>
+    <ul>
+    	<li>Redundancy of data allows them to find an answer, even if no clear result is found</li>
+    	<li>An example from another paper from these authors is shown here.  They present a query &#8220;How many times did Bjorn Borg win Wimbledon?&#8221;, and show these example results.</li>
+    	<li>Because 5 shows up 3 times as often as 37, we can assume that he won it 5 times with a decent degree of certainty.</li>
+    	<li>I&#8217;m not sure how much I buy this argument, and I&#8217;ll revisit it later in my critique.</li>
+    </ul>
+    <hr>
+    <h3>Critique</h3>
+    <ul>
+    	<li>The redundancy argument with Bjorn Borg and the Wimbledon seems week to me.</li>
+    	<li>Suppose that he won it only once, in 1974 (this was actually his first of 5 wins).</li>
+    	<li>Now each article that mentions him and the Wimbledon will most definitely make mention of 1974, and perhaps state that he only won it once.</li>
+    	<li>Under the rules for redundancy mentioned before, AskMSR would reply that Bjorn had won 1974 times! Quite a feat, considering the event has only take place since 1877.</li>
+    </ul>
+  </body>
+</html>
