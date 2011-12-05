@@ -99,6 +99,7 @@ div.slide {
   right: 0;
   line-height: 120%;
   background-color: transparent;
+  text-align: center;
 }
 
 div.background {
@@ -110,23 +111,16 @@ div.handout {
   margin-right: 20px;
 }
 
-div.slide.titlepage {
-  text-align: center;
-}
 
-div.slide.titlepage h1 {
-  padding-top: 10%;
-  margin-right: 0;
-}
 
 div.slide h1 {
   padding-left: 0;
   padding-right: 20pt;
-  padding-top: 4pt;
+  padding-top: 10%;
   padding-bottom: 4pt;
   margin-top: 0;
   margin-left: 0;
-  margin-right: 60pt;
+  margin-right: 0;
   margin-bottom: 0.5em;
   display: block; 
   font-size: 160%;
