@@ -1,0 +1,101 @@
+!!!
+%html
+  %head
+    %title AskMSR
+    %link{:rel => 'stylesheet', :type => 'text/css', :media => 'screen, projection, print', :href => 'resources/slidy.css'}
+    %link{:rel => 'stylesheet', :type => 'text/css', :media => 'screen, projection, print', :href => 'resources/local.css'}
+    %script{:src => 'resources/slidy.js', :charset => 'utf-8', :type => 'text/javascript'}
+
+  %body
+    .slide
+      %h1 An Analysis of the AskMSR Question-Answering System
+      %h3 Eric Brill, Susan Dumais and Michele Banko
+      %h4 Microsoft Research
+      %span.topline presented by Brian Stack {bis12@case.edu}
+      
+
+    .slide
+      %h1 Introduction
+      :textile
+        AskMSR = Ask Microsoft Research
+        TREC = Text REtrieval Conference
+    .slide
+      %h1 Main Result
+      :textile
+        h3. Redundancy
+
+        h4. Redundancy
+
+        h4. Redundancy
+
+        h5. Redundancy
+
+        h5. Redundancy
+
+        h6. Redundancy
+
+
+    .slide
+      %h1 MRR
+      %div{:style => 'background-color: white; border: 3px double #111; width: 200px; padding: 5px;margin-left: auto; margin-right: auto; margin-top: 40px;'} 
+        %img{:src => 'http://upload.wikimedia.org/wikipedia/en/math/f/d/e/fde159d9560f3352a6d70b001a9b4083.png'}
+    .slide
+      %h1 Methodology: Part 1
+      :textile
+        h1{color:#ee0;}. Query &rarr; Web &rarr; Corpus
+    .slide
+      %h1 Methodology: Part 2
+      %img{:src => 'arch.png'}
+    .slide
+      %h1 Implementation: Query Reformulation
+      :textile
+        When was the paper clip invented?
+        &darr;
+        The paper clip was invented
+        &darr;
+        paper clip invented
+    .slide
+      %h1 Implementation: Search Engine
+      %img{:src => 'http://www.seomofo.com/img/google-new-logo.png'}
+
+    .slide
+      %h1 Implementation: Mine N-grams 
+      :textile
+        h2. <span style="color:red">tf-i</span>df
+
+    .slide
+      %h1 Implementation: Filter N-grams 
+      :textile
+        h3. who, what, when, where, why
+
+        and sometimes how?
+
+    .slide
+      %h1 Implementation: Tile N-grams 
+      :textile
+        what does "laser" stand for?
+        &darr;
+        light amplification by stimulted emission of radiation
+
+    .slide
+      %h1 Implementation: Redundancy 
+      :textile
+        (1) *Bjorn Borg* blah blah *Wimbledon* blah blah *5* blah
+        (2) *Wimbledon* blah blah blah *Bjorn Borg* blah *37* blah.
+        (3) blah *Bjorn Borg* blah blah *5* blah blah *Wimbledon*
+        (4) *5* blah blah *Wimbledon* blah blah *Bjorn Borg*.
+
+    .slide
+      %h1 Data
+    .slide
+      %h1 Results
+    .slide
+      %h1 Critique
+      :textile
+        Redundancy doesn't necessarily make sense.
+        &
+        Set of naive rules seems like a weak point of this paper.  
+    .slide
+      %h1 Future Work
+      :textile
+        May be possible to learn sentence reformulation

@@ -1,0 +1,129 @@
+!!!
+%html
+  %head
+    %title AskMSR -- Speaker Notes
+    :css
+      h2 {
+        text-align: center;
+      }
+  %body
+    %h2 AskMSR -- Speaker Notes
+    :textile
+
+      h3. Introduction
+
+      * Ask Microsoft Research
+      * Text retrieval conference
+      * this was in the QA track, which no longer exists
+      * the problem being solved is identical to IBM's Watson. 
+      ** Given a natural language query, respond with a succinct answer, not a document that contains the answer.
+
+      <hr>
+      h3. Main Result
+
+      * We can use the web to answer these queries
+      * The power in this approach comes from the massive redundancy of data on the web
+      * Much easier to do it this way than to find a single answer in a small corpus like the one provided for TREC
+      * This system performed as well as the top performers in TREC 
+      * Got 61% of answers correct 
+      * Average answer length  was 12 bytes, so the answers were short too
+
+      <hr>
+      h3. MRR
+      * Used mean reciprocal rank to find accuracy of AskMSR
+      ** multiply 1/#queries by sum of ranks of first correct answer
+        
+      <hr>
+      h3. Methodology: Part 1
+      * First, the query is passed through a process that is the main focus of this presentation
+      * Next the results are tested against the correct answers provided for TREC
+      * problem is that time mismatch between trec and web will create missing answers
+      * supporting documents in trec are found as last step
+
+      <hr>
+      h3. Methodology: Part 2
+
+      Each of these stages makes up a part of the AskMSR system, and will be gone into in depth in later slides.
+
+      # Query Reformulation
+      ** The system reformulates query strings into multiple secondary queries to pass on to the search engine
+      ** The secondary queries are chosen to be substrings of potential answers
+      # Search Engine
+      ** The search engine used is actually just Google!
+      # Mine N-grams
+      ** Page summaries from Google results are collected 
+      ** Extract unigram, bigram, and trigrams for later processing
+      # Filter N-grams
+      ** the n-grams are filtered and reweighted according to how well each candidate matches the expected answer-type
+      # Tile N-grams
+      ** Finally n-grams are merged into longer and longer answers until none can be combined further
+      # Return K best answers
+      ** All answers returned with confidence values 
+
+      <hr>
+      h3. Implementation:Query Reformulation
+
+      * Generate successively less and less specific queries.
+      * No parser or part-of-speech tagger is used <b>however, do use a lexicon to get morphological variants of some words</b>
+      * Queries that are more specific are given higher weighting 
+
+      <hr>
+      h3. Implementation:Search Engine
+
+      * Just send the query off to google.
+      * Results are taken from the page summaries
+      ** not the full page for efficiency's sake
+      * where is cwru &rarr;  ... Reserve, and CWRU) is a private research university in Cleveland, Ohio, USA. ... In U.S. News & World Report's 2012 rankings, Case Western Reserve's ...
+
+      <hr>
+      h3. Implementation:N-gram Mining
+
+      * Summary text is broken into unigrams, bigrams, and trigrams 
+      * scored based on query that supplied this text, based on the metric mentioned before
+      * n-gram scores are then summed across how many summaries they showed up in, <b>opposite of idf</b>
+      * no tf at all
+      * from the document: "the final score for an n-gram is based on the weights associated with the rewrite rules that generated it and the number of unique summaries in which it occurred."
+
+      <hr>
+      h3. Implementation:N-gram Filtering
+
+      * Original query is analyzed, and put into one of 7 bins of "question type"
+      * based on this, the system has a set of filters to apply for each question (such as presence of digits for a "when" question)
+      * a rescore is applied based on the results from this stage
+      * This is the most important single part of the system. If it is removed, accuracy decreases by 17 percent
+
+      <hr>
+      h3. Implementation:N-gram Tiling
+
+      * Makes it possible to find answers that are longer than three words
+      * substrings don't take up multiple slots
+      * Works by taking answers that overlap and combining them.  ABC and BCD turn into ABCD.  
+      * Works greedily with higher scoring candidates first (higher scoring one is turned into longer answer, lower scoring one removed)
+      * Iteratively applied until no more combinations can occur
+
+      <hr>
+      h3. Implementation:Redundancy
+
+      * Redundancy of data allows them to find an answer, even if no clear result is found
+      * An example from another paper from these authors is shown here.  They present a query "How many times did Bjorn Borg win Wimbledon?", and show these example results.  
+      * Because 5 shows up 3 times as often as 37, we can assume that he won it 5 times with a decent degree of certainty.
+      * I'm not sure how much I buy this argument, and I'll revisit it later in my critique. 
+
+      <hr>
+      h3. Critique 
+
+      * Redundancy 
+      ** The redundancy argument with Bjorn Borg and the Wimbledon seems week to me.  
+      ** Suppose that he won it only once, in 1974 (this was actually his first of 5 wins).  
+      ** Now each article that mentions him and the Wimbledon will most definitely make mention of 1974, and perhaps state that he only won it once.
+      ** Under the rules for redundancy mentioned before, AskMSR would reply that Bjorn had won 1974 times! Quite a feat, considering the event has only take place since 1877.
+      * Query Reformulation
+      ** Set of naive rules seems like a weak point of this paper.  
+      ** Although the  authors acknowledge this and mention it as an area for improvement.
+      ** STOP WORDS WERE ALSO PROBLEM: NEW YORK -> YORK
+
+      <hr>
+      h3. Future Work
+
+      * May be possible to "learn" query reformulation rather than using a small set of naive rules.
+      * This would just plain feel better, and probably be better
