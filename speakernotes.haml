@@ -6,6 +6,10 @@
       h2 {
         text-align: center;
       }
+      body {
+        font-size: 200%;
+        line-height: 150%;
+      }
   %body
     %h2 AskMSR -- Speaker Notes
     :textile
@@ -110,6 +114,15 @@
       * I'm not sure how much I buy this argument, and I'll revisit it later in my critique. 
 
       <hr>
+      h3. Results
+
+      * As mentioned before, system performed well
+      * These are the causes of errors that were present
+      * 34 percent, (time and correct) were not necessarily problems with AskMSR, just that the trec corpus was off in time, or did not contain the answer at all
+      * Completely out of paradigm was the "number" problem, where they couldn't query for  "Fiji has &gt;NUM&lt; islands"
+      * The authors brought up this problem, but I have other critiques too.
+
+      <hr>
       h3. Critique 
 
       * Redundancy 
@@ -127,3 +140,4 @@
 
       * May be possible to "learn" query reformulation rather than using a small set of naive rules.
       * This would just plain feel better, and probably be better
+      * Authors were investigating extending the system to more complex problems (paragaphs of return text)
